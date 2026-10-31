@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scribble Shed</title>
+<meta name="theme-color" content="#5b7cff">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/style.css">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('ss:theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}catch(e){}</script>
+</head>
+<body>
+<header class="bar">
+  <a class="logo" href="./"><span class="mark" aria-hidden="true"></span>Scribble Shed</a>
+  <div class="tools">
+    <a class="btn" href="./">All games</a>
+    <button class="btn" id="theme" type="button" aria-label="Switch theme"></button>
+  </div>
+</header>
+<main class="wrap">
+  <h1 id="title" class="play-title"></h1>
+  <p id="desc" class="lead"></p>
+  <div id="actions" class="tools actions">
+    <button class="btn" id="restart" type="button">Restart</button>
+    <button class="btn" id="sound" type="button" aria-pressed="true">Sound on</button>
+    <button class="btn" id="full" type="button">Fullscreen</button>
+  </div>
+  <div id="stage" class="stage"><iframe id="frame" title="Game" allow="fullscreen; gamepad; autoplay"></iframe></div>
+  <div data-ad-slot="game-below"></div>
+</main>
+<footer class="foot">Made by hand by people who like tiny games.</footer>
+<script type="module" src="js/play.js"></script>
+</body>
+</html>

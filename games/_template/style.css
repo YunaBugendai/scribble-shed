@@ -1,0 +1,4 @@
+/* Styles for this game only. Nothing here leaks into other games. */
+html,body{height:100%;margin:0}
+body{display:grid;place-items:center;font-family:system-ui,sans-serif;background:#222;color:#fff}
+canvas{max-width:100%;background:#000}

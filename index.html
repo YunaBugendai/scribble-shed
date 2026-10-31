@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scribble Shed: small odd games</title>
+<meta name="description" content="A little shed full of small, odd browser games.">
+<meta name="theme-color" content="#5b7cff">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/style.css">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('ss:theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}catch(e){}</script>
+</head>
+<body>
+<header class="bar">
+  <a class="logo" href="./"><span class="mark" aria-hidden="true"></span>Scribble Shed</a>
+  <div class="tools">
+    <button class="btn" id="random" type="button">Surprise me</button>
+    <button class="btn" id="theme" type="button" aria-label="Switch theme"></button>
+  </div>
+</header>
+<main class="wrap">
+  <section class="hero">
+    <h1>A shed full of small, odd games.</h1>
+    <p class="lead">We make little games for the browser. Pick one, poke at it, show a friend.</p>
+  </section>
+  <section id="controls" class="controls" hidden>
+    <input id="q" type="search" placeholder="Search games" aria-label="Search games" autocomplete="off">
+    <div id="cats" class="cats" role="group" aria-label="Categories"></div>
+  </section>
+  <section id="grid" class="grid" aria-live="polite"></section>
+  <p id="empty" class="empty" hidden></p>
+  <div data-ad-slot="home-banner"></div>
+</main>
+<footer class="foot">Made by hand by people who like tiny games. Works offline once you've visited.</footer>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
