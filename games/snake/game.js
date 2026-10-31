@@ -1,0 +1,10 @@
+const c=document.querySelector('#stage'),x=c.getContext('2d'),status=document.querySelector('#status');c.width=600;c.height=400;
+const cell=20,cols=30,rows=20;let snake,dir,next,food,score,dead,timer;
+function reset(){snake=[{x:8,y:10},{x:7,y:10},{x:6,y:10}];dir={x:1,y:0};next=dir;score=0;dead=false;place();status.textContent='Score: 0';draw();clearInterval(timer);timer=setInterval(tick,115)}
+function place(){do{food={x:Math.floor(Math.random()*cols),y:Math.floor(Math.random()*rows)}}while(snake.some(p=>p.x===food.x&&p.y===food.y))}
+function turn(dx,dy){if(dx!==-dir.x||dy!==-dir.y)next={x:dx,y:dy}}
+addEventListener('keydown',e=>{let k=e.key.toLowerCase(),m={arrowup:[0,-1],w:[0,-1],arrowdown:[0,1],s:[0,1],arrowleft:[-1,0],a:[-1,0],arrowright:[1,0],d:[1,0]}[k];if(m){e.preventDefault();turn(...m)}});
+let sx=0,sy=0;c.addEventListener('pointerdown',e=>{sx=e.offsetX;sy=e.offsetY});c.addEventListener('pointerup',e=>{let dx=e.offsetX-sx,dy=e.offsetY-sy;if(Math.max(Math.abs(dx),Math.abs(dy))<12)return;if(Math.abs(dx)>Math.abs(dy))turn(Math.sign(dx),0);else turn(0,Math.sign(dy))});
+function tick(){if(dead)return;dir=next;let h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};if(h.x<0||h.y<0||h.x>=cols||h.y>=rows||snake.some((p,i)=>i>0&&p.x===h.x&&p.y===h.y)){dead=true;status.textContent='Game over — score: '+score+'. Press New game.';return}snake.unshift(h);if(h.x===food.x&&h.y===food.y){score+=10;place();status.textContent='Score: '+score}else snake.pop();draw()}
+function draw(){x.fillStyle='#101020';x.fillRect(0,0,c.width,c.height);x.fillStyle='#ff77aa';x.fillRect(food.x*cell+2,food.y*cell+2,cell-4,cell-4);snake.forEach((p,i)=>{x.fillStyle=i?'#a8dc83':'#d4ff9f';x.fillRect(p.x*cell+1,p.y*cell+1,cell-2,cell-2)})}
+document.querySelector('#restart').onclick=reset;document.querySelector('#help').textContent='Arrow keys / WASD or swipe on the board.';reset();
