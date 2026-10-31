@@ -1,5 +1,5 @@
-// Service worker: offline app shell + runtime caching. Bump CACHE after each deploy to force fresh files.
-const CACHE = 'scribble-shed-v1';
+// Service worker: offline app shell + runtime caching. Bump CACHE after each deploy.
+const CACHE = 'scribble-shed-v2';
 const SHELL = ['./', 'index.html', 'play.html', 'css/style.css', 'js/app.js', 'js/play.js', 'js/ads.js',
   'js/config.js', 'js/platform.js', 'games/registry.js', 'manifest.webmanifest', 'icons/icon.svg'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });

@@ -1,0 +1,10 @@
+const c=document.querySelector('#stage'),x=c.getContext('2d'),status=document.querySelector('#status');c.width=300;c.height=600;const shapes=[[[1,1,1,1]],[[1,1],[1,1]],[[0,1,0],[1,1,1]],[[1,0,0],[1,1,1]],[[0,0,1],[1,1,1]],[[1,1,0],[0,1,1]],[[0,1,1],[1,1,0]]];let grid,piece,px,py,score,over,tick=0;
+function spawn(){piece=shapes[Math.floor(Math.random()*shapes.length)].map(r=>r.slice());px=3;py=0;if(hit(0,0))over=true}
+function reset(){grid=Array.from({length:20},()=>Array(10).fill(0));score=0;over=false;spawn();status.textContent='Score: 0';draw()}
+function hit(dx,dy){return piece.some((r,y)=>r.some((v,z)=>v&&(px+z+dx<0||px+z+dx>=10||py+y+dy>=20||py+y+dy>=0&&grid[py+y+dy][px+z+dx])))}
+function lock(){piece.forEach((r,y)=>r.forEach((v,z)=>{if(v&&py+y>=0)grid[py+y][px+z]=1}));let n=0;grid=grid.filter(r=>{if(r.every(Boolean)){n++;return false}return true});while(grid.length<20)grid.unshift(Array(10).fill(0));score+=n*n*100;status.textContent='Score: '+score;spawn();if(over)status.textContent='Game over — score: '+score+'. New game?'}
+function draw(){x.fillStyle='#101020';x.fillRect(0,0,300,600);grid.forEach((r,y)=>r.forEach((v,z)=>{if(v)block(z,y,'#a9a2ff')}));piece.forEach((r,y)=>r.forEach((v,z)=>{if(v)block(px+z,py+y,'#ff77aa')}))}
+function block(a,b,col){x.fillStyle=col;x.fillRect(a*30+1,b*30+1,28,28)}
+function down(){if(over)return;if(!hit(0,1))py++;else lock();draw()}
+addEventListener('keydown',e=>{if(over)return;if(['ArrowLeft','ArrowRight','ArrowDown','ArrowUp',' '].includes(e.key))e.preventDefault();if(e.key==='ArrowLeft'&&!hit(-1,0))px--;if(e.key==='ArrowRight'&&!hit(1,0))px++;if(e.key==='ArrowDown')down();if(e.key==='ArrowUp'){piece=piece[0].map((_,i)=>piece.map(r=>r[i]).reverse());if(hit(0,0))piece=piece[0].map((_,i)=>piece.map(r=>r[i]).reverse())}if(e.key===' ')while(!hit(0,1))py++;if(e.key===' ')lock();draw()});
+document.querySelector('#restart').onclick=reset;document.querySelector('#help').textContent='← → move · ↓ drop · ↑ rotate · Space hard drop.';reset();setInterval(()=>{if(++tick%1===0)down()},650);
